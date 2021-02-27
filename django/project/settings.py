@@ -43,6 +43,7 @@ BASE_INSTALLED_APPS = [
     'project',
     'buckets',
     'tags',
+    'users',
 ]
 
 INSTALLED_APPS = list(set(BASE_INSTALLED_APPS + CORE_INSTALLED_APPS))

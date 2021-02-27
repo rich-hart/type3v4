@@ -41,3 +41,7 @@ class Base(models.Model):
 
     class Meta:
         abstract = True
+
+class Object(Base):  #NOTE: Replace Base with Object?  Allow either / or?
+    name = models.CharField(max_length=2**6)
+
