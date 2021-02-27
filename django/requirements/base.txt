@@ -1,0 +1,7 @@
+djangorestframework
+markdown
+django-filter
+pymongo
+pymemcache
+boto3
+psycopg2-binary

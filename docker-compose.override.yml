@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  db:
+    volumes:
+      - ./data/psql:/var/lib/postgresql/data #TODO: Make sure volume is mounted
+    ports:
+      - 5432:5432/tcp
+  adminer:
+    ports:
+      - 9090:8080/tcp
+  backend:
+    ports:
+      - 8000:8000/tcp
+  mongo:
+    volumes:
+      - ./data/mongo:/data/db
+    ports:
+      - 27017:27017/tcp
+  mongo-express:
+    ports:
+      - 8081:8081/tcp
+  cache:
+    ports:
+      - 11211:11211/tcp
+#  proxy:
+#    ports:
+#      - 80:80
+#      - 443:443
