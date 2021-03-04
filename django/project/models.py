@@ -16,7 +16,7 @@ class Base(models.Model):
     def clients(self):
         return self._clients
 
-    tag = models.UUIDField(
+    object_id = models.UUIDField(
         primary_key = False,
         unique = True,
         default = uuid.uuid4,

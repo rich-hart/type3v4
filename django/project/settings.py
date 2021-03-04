@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+PROJECT_VERSION = '0.0.0'
+API_VERSION = PROJECT_VERSION.split('.')[0]
 
 # Application definition
 
@@ -37,6 +39,7 @@ CORE_INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tagging',
 ]
 
 BASE_INSTALLED_APPS = [
@@ -161,12 +164,12 @@ MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)
 MEMCACHED_HOST = os.environ.get('MEMCACHED_HOST','0.0.0.0') #localhost
 MEMCACHED_PORT = os.environ.get('MEMCACHED_PORT', 11211)
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': f'{MEMCACHED_HOST}:{MEMCACHED_PORT}',
-    }
-}
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#        'LOCATION': f'{MEMCACHED_HOST}:{MEMCACHED_PORT}',
+#    }
+#}
 
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://guest:guest@localhost:27017')
 MONGO_DATABASE = os.environ.get('MONGO_INITDB_DATABASE','project')
