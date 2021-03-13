@@ -69,6 +69,15 @@ class Project(Tag):
     object =  models.UUIDField(editable=False,null=False)
     name = models.UUIDField(editable=False,null=False, default=ROOT_NAMESPACE)
 
+    @property
+    def data(self):
+        mongo = self.clients['mongo']
+        class_name = ModelSpace.objects.get(key=self.model).name
+        collection = mongo.db[class_name]
+        data = collection.find({"_id" :str(self._id)})[0]
+        data = data['_data']
+        return data
+
     def build(self):
         attributes = []
         for field in Project._meta.get_fields():

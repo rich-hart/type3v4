@@ -10,4 +10,4 @@ django-tagging
 celery
 django-celery-results
 django-celery-beat
-
+requests

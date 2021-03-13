@@ -18,8 +18,9 @@ class TestFiles(TestCase):
         self.assertEqual(expected,returned)
 
     def test_parse_csv(self):
-        import ipdb; ipdb.set_trace()
         with open('data/tests/test.csv','rb') as fp:
             file = File.objects.create(_instance=FileField(fp))
         tag_id = parse_csv(str(file.object_id))
-            
+        tag = Tag.objects.get(_id=tag_id) 
+        returned = tag.data
+        self.assertTrue(returned)    

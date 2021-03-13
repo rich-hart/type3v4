@@ -1,5 +1,6 @@
 import io
 import csv
+import requests
 from celery import shared_task
 
 from buckets.models import *
@@ -7,7 +8,6 @@ from tags.models import Project as Tag
 
 @shared_task()
 def parse_csv(object_id, headers=True):
-    import ipdb; ipdb.set_trace()
     file = File.objects.get(object_id=object_id)
     file_binary = file.instance.read()
     data = file_binary.decode('utf-8')
@@ -26,10 +26,11 @@ def parse_csv(object_id, headers=True):
     for row in data:
         json_data.append(dict(list(zip(headers,row))))
     tag = Tag.add_tag(object=file,name='csv', data=json_data)
-    return tag._id
+    return str(tag._id)
 
 
 @shared_task()
-def stanford_nlp(*args,**kwargs):
-    return args
+def stanford_nlp(tag_id):
+    tag = Tag.objects.get(_id=tag_id)
+    return []
 
