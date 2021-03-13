@@ -38,7 +38,8 @@ class Folder(FSObject):
 
 class File(FSObject):
     _raw = None
-    _instance = models.FileField(storage=MediaStorage(),null=True)
+    _instance = models.FileField(upload_to='files/%Y/%m/%d')
+
     def get_bucket(self):
         current_obj = self
         bucket = None
@@ -52,6 +53,10 @@ class File(FSObject):
     def raw(self):
         return self._raw
 
+    @property
+    def instance(self):
+        return self._instance
+
 
 class Text(File): #TEXT
     _text = models.TextField()
@@ -61,13 +66,4 @@ class Bucket(FSObject):
     pass
 
 
-class Image(File):
-    pass
 
-
-class Audio(File):
-    pass
-
-
-class Video(File):
-    pass
