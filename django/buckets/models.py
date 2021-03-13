@@ -38,7 +38,7 @@ class Folder(FSObject):
 
 class File(FSObject):
     _raw = None
-    _instance = models.FileField(upload_to='files/%Y/%m/%d')
+    _instance = models.FileField(storage=MediaStorage(),null=True)
 
     def get_bucket(self):
         current_obj = self

@@ -151,7 +151,7 @@ AWS_REGION = 'us-east-1'
 
 AWS_S3_FILE_OVERWRITE = False
 
-AWS_STORAGE_BUCKET_NAME = 'project-dev-claxotionf'
+AWS_STORAGE_BUCKET_NAME = 'test-eiehxrrixs'
 
 AWS_REGION = 'us-east-1'
 AWS_S3_CUSTOM_DOMAIN = 's3.%s.amazonaws.com/%s' % (AWS_REGION, AWS_STORAGE_BUCKET_NAME)
@@ -189,3 +189,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'UTC'
 
+try:
+    from .local import *
+except ImportError:
+    pass
