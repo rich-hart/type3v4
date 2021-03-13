@@ -12,6 +12,10 @@ services:
   backend:
     ports:
       - 8000:8000/tcp
+  queue:
+    ports:
+      - 5672:5672/tcp
+      - 8080:15672/tcp
   mongo:
     volumes:
       - ./data/mongo:/data/db

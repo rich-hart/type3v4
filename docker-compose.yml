@@ -24,6 +24,18 @@ services:
   cache:
     container_name: memcached
     image: memcached
+  worker:
+    image: project:latest
+    container_name: project_worker
+    command: celery -A project worker --loglevel=info
+    env_file:
+      - base.env
+    depends_on:
+      - backend
+      - queue
+  queue:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
   mongo:
     image: mongo:4.2.0
     restart: always
@@ -37,8 +49,10 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: guest
       ME_CONFIG_MONGODB_ADMINPASSWORD: guest
-#  proxy:
-#    container_name: project_proxy
-#    build: nginx
-#    depends_on:
-#      - backend
+  proxy:
+    container_name: project_proxy
+    build: nginx
+    depends_on:
+      - backend
+    ports:
+      - 80:80

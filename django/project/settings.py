@@ -40,6 +40,10 @@ CORE_INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tagging',
+    'django_celery_beat',
+    'django_celery_results',
+    'django_filters',
+    'rest_framework',
 ]
 
 BASE_INSTALLED_APPS = [
@@ -173,3 +177,15 @@ MEMCACHED_PORT = os.environ.get('MEMCACHED_PORT', 11211)
 
 MONGO_URL = os.environ.get('MONGO_URL', 'mongodb://guest:guest@localhost:27017')
 MONGO_DATABASE = os.environ.get('MONGO_INITDB_DATABASE','project')
+
+
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'amqp://guest:guest@localhost:5672')
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND','amqp://guest:guest@localhost:5672//')
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_RESULT_PERSISTENT = True
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
