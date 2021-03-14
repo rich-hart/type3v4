@@ -7,7 +7,7 @@ class FileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = File
-        fields = ('id', 'object_id', 'instance')
+        fields = ('object_id', 'instance')
 
     def create(self, validated_data):
         validated_data['_instance'] = validated_data.pop('instance')

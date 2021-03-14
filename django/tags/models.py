@@ -20,6 +20,7 @@ class Space(Base):
         primary_key = True,
         editable = False,
     )
+    object_id = None
 
     @staticmethod
     def get_value(name):
@@ -60,7 +61,7 @@ class Tag(Base):
         editable = True,
     )
     _data = JSONField(default=dict)
-
+    object_id = None
 
 class Project(Tag):
     api = models.UUIDField(editable=False,null=False, default=DEFAULT_API_ID)
