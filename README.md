@@ -23,6 +23,7 @@ Sample file at `django/data/tests/test.csv`.
 
 File list at [http://localhost/api/files/](http://localhost/api/files/).
 
-File detail at [http://localhost/api/files/\<id\>/](http://localhost/api/files/).
+File detail at http://localhost/api/files/\<id\>/.
 
+Filter files with http://localhost/api/files/?object\_id=\<object\_id\>
 
