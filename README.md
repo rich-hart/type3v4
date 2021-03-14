@@ -25,3 +25,11 @@ File detail at `http://localhost/api/files/<id>/`.
 
 Filter files with `http://localhost/api/files/?object_id=<object_id>`
 
+## Support Services
+
+Mongo Express: [http://localhost/mongo](http://localhost/mongo).
+
+RabbitMQ Management [http://localhost/queue](http://localhost/queue).
+
+Adminer [http://localhost/adminer](http://localhost/adminer).
+
