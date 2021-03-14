@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h^^*-b*6(oig(1)w1xzc*@0j%973r=&29k-b)59b&xtm!ts3w='
+SECRET_KEY = os.environ.get('SECRET_KEY','h^^*-b*6(oig(1)w1xzc*@0j%973r=&29k-b)59b&xtm!ts3w=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -145,8 +145,9 @@ FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
 ]
 
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY = ''
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID','')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY','')
+
 AWS_REGION = 'us-east-1'
 
 AWS_S3_FILE_OVERWRITE = False
@@ -181,7 +182,7 @@ MONGO_DATABASE = os.environ.get('MONGO_INITDB_DATABASE','project')
 
 CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'amqp://guest:guest@localhost:5672')
 CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND','amqp://guest:guest@localhost:5672//')
-CELERY_RESULT_BACKEND = 'django-db'
+
 CELERY_RESULT_PERSISTENT = True
 CELERY_CACHE_BACKEND = 'django-cache'
 CELERY_ACCEPT_CONTENT = ['application/json']
