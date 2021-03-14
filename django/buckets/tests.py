@@ -16,6 +16,9 @@ class TestFiles(TestCase):
         expected = 201
         returned = response.status_code
         self.assertEqual(expected,returned)
+        data = response.json()
+        self.assertTrue(data.get('parse_status'))
+        self.assertTrue(data.get('nlp_status'))
 
     def test_parse_csv(self):
         with open('data/tests/test.csv','rb') as fp:

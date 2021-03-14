@@ -17,7 +17,6 @@ class FileViewSet(viewsets.ModelViewSet):
     filterset_fields = ['object_id']
 
     def perform_create(self, serializer):
-        import ipdb; ipdb.set_trace()
         file = serializer.save()
         if file.instance.name.endswith('.csv'):
             args = (str(file.object_id),file.has_headers)
