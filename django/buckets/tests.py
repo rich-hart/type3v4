@@ -9,7 +9,6 @@ class TestFiles(TestCase):
         File.objects.all().delete()
 
     def test_csv_upload(self):
-        import ipdb; ipdb.set_trace()
         url = reverse('file-list')
         with open('data/tests/test.csv') as fp:
             data = {'instance': fp,'has_headers': True}
@@ -36,10 +35,13 @@ class TestFiles(TestCase):
         self.assertTrue(returned)
         return str(tag._id)
 
-    def test_parse_view(self):
-        import ipdb; ipdb.set_trace()       
+    def test_parse_view(self):    
         tag_id = self.test_nlp_task()
         tag = Tag.objects.get(_id=tag_id)
         file = tag.get_object()
-        url = reverse('file-detail', kwargs={'pk': str(file.object_id)})
+        url = reverse('file-detail', kwargs={'pk': str(file.pk)})
         response = self.client.get(url)
+        data = response.json()
+        self.assertTrue(data.get('headers'))
+        self.assertTrue(data.get('rows'))
+        self.assertTrue(data.get('temporals'))

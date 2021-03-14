@@ -30,7 +30,6 @@ class FileSerializer(serializers.ModelSerializer):
         )
 
     def to_representation(self, instance):
-        import ipdb; ipdb.set_trace()
         instance.headers = []
         instance.rows = {}
         instance.temporals = {}
@@ -38,7 +37,7 @@ class FileSerializer(serializers.ModelSerializer):
         instance.nlp_status = ''
 
         tag_id = Tag.get_tag_id(instance, 'tasks')
-        tasks_tag = Tag.objects.filter(_id = tag_id).first() or {}
+        tasks_tag = Tag.objects.filter(_id = tag_id).first()
 
         if tasks_tag:
 
@@ -49,6 +48,27 @@ class FileSerializer(serializers.ModelSerializer):
             parse_task_id = tasks_tag.data.get('parse_task_id','')
             parse_result = AsyncResult(parse_task_id,app=celery_app)
             instance.parse_status = parse_result.status
+
+
+        tag_id = Tag.get_tag_id(instance, 'csv')
+        csv_tag = Tag.objects.filter(_id = tag_id).first()
+
+        if csv_tag:
+            headers = list(csv_tag.data[0].keys()) if csv_tag.data else None
+            rows = []
+            for item in csv_tag.data:
+                cols = []
+                for header in headers:
+                    cols.append(item[header])
+                rows.append(cols)
+            instance.headers = headers
+            instance.rows = rows
+
+        tag_id = Tag.get_tag_id(instance, 'nlp')
+        nlp_tag = Tag.objects.filter(_id = tag_id).first()
+
+        if nlp_tag:
+            instance.temporals = nlp_tag.data
 
         rep = super(FileSerializer, self).to_representation(instance)
         return rep
