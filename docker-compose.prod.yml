@@ -36,6 +36,8 @@ services:
   queue:
     container_name: rabbitmq
     image: rabbitmq:3-management
+    environment:
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: -rabbitmq_management path_prefix "/queue"
   mongo:
     image: mongo:4.2.0
     restart: always
@@ -49,6 +51,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: guest
       ME_CONFIG_MONGODB_ADMINPASSWORD: guest
+      ME_CONFIG_SITE_BASEURL: /mongo
   proxy:
     container_name: project_proxy
     build: nginx
