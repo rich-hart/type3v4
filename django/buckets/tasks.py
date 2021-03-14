@@ -1,3 +1,4 @@
+import time
 import io
 import csv
 import requests
@@ -5,6 +6,9 @@ from celery import shared_task
 
 from buckets.models import *
 from tags.models import Project as Tag
+
+STANFORD_URL = 'https://stanford-public.alkymi.cloud/getTemporals'
+
 
 @shared_task()
 def parse_csv(object_id, headers=True):
@@ -32,5 +36,21 @@ def parse_csv(object_id, headers=True):
 @shared_task()
 def stanford_nlp(tag_id):
     tag = Tag.objects.get(_id=tag_id)
-    return []
+    file = tag.get_object()
+    data = []
+    for row_id in range(len(tag.data)):
+        row = tag.data[row_id]
+        for col_id in row:
+            cell = tag.data[row_id][col_id]
+            url = STANFORD_URL + '?text=' + str(cell)
+            response = requests.get(url).json()
+            time.sleep(.25) # don't over query server
+            if response and isinstance(response,list):
+                response = response[0]
+                response['row'] = row_id
+                response['col'] = col_id
+                data.append(response)
+    tag = Tag.add_tag(object=file,name='nlp', data=data)
+    return str(tag._id)
+
 

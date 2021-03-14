@@ -1,6 +1,7 @@
 from django.db import models
 from project.models import Object
 from project.storage_backends import MediaStorage
+from tagging.registry import register
 
 class FSObject(Object):
     owner = models.ForeignKey(
@@ -66,4 +67,5 @@ class Bucket(FSObject):
     pass
 
 
+register(FSObject)
 

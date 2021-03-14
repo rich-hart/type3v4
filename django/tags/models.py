@@ -75,8 +75,8 @@ class Project(Tag):
         mongo = self.clients['mongo']
         class_name = ModelSpace.objects.get(key=self.model).name
         collection = mongo.db[class_name]
-        data = collection.find({"_id" :str(self._id)})[0]
-        data = data['_data']
+        data = collection.find_one({"_id" :str(self._id)}) or {}
+        data = data.get('_data',{})
         return data
 
     def build(self):
@@ -107,13 +107,13 @@ class Project(Tag):
     def get_tag_id(cls, object, tag_name=''):
         model_id = Space.get_value(object.class_name)
         app_id = Space.get_value(object.app_name)
-        object_id = object.tag
-        namespace_id = Space.get_value(tag_name)
+        object_id = object.object_id
+        namespace_id = Space.get_value(tag_name.upper())
         instance = cls(
             application=app_id,
             model=model_id,
             object=object_id,
-            namespace=namespace_id,
+            name=namespace_id,
         )
         instance.build()
         return instance._id
@@ -134,7 +134,7 @@ class Project(Tag):
             updated = timezone.now(),
         )
         instance.save()
-#        DjangoTag.objects.add_tag(object, str(instance._id))
+        DjangoTag.objects.add_tag(object, str(instance._id))
 #        DjangoTag.objects.add_tag(object, str(namespace_id))
         return instance
 

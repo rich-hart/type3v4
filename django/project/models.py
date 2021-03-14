@@ -17,7 +17,7 @@ class Base(models.Model):
         return self._clients
 
     object_id = models.UUIDField(
-        primary_key = True,
+        primary_key = False,
         unique = True,
         default = uuid.uuid4,
         editable = False,
