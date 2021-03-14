@@ -3,3 +3,4 @@ venv
 *.pyc
 *local.py
 prod.env
+*.DS_Store
