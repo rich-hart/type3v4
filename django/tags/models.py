@@ -134,7 +134,7 @@ class Project(Tag):
             updated = timezone.now(),
         )
         instance.save()
-        DjangoTag.objects.add_tag(object, str(instance._id))
+#        DjangoTag.objects.add_tag(object, str(instance._id))
 #        DjangoTag.objects.add_tag(object, str(namespace_id))
         return instance
 

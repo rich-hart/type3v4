@@ -12,7 +12,7 @@ class TestFiles(TestCase):
         url = reverse('file-list')
         with open('data/tests/test.csv') as fp:
             data = {'instance': fp}
-            responce = self.client.post(url, data)
+            response = self.client.post(url, data)
         expected = 201
         returned = response.status_code
         self.assertEqual(expected,returned)
