@@ -17,11 +17,9 @@ Notes:
 
 Go to home page at [http://localhost](http://localhost).
 
-Upload files at [http://localhost/api/files/](http://localhost/api/files/).
+View and upload files at [http://localhost/api/files/](http://localhost/api/files/).
 
 Sample file at `django/data/tests/test.csv`.
-
-File list at [http://localhost/api/files/](http://localhost/api/files/).
 
 File detail at `http://localhost/api/files/<id>/`.
 
