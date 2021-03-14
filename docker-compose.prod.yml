@@ -1,0 +1,58 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: root
+      POSTGRES_DB: project
+  adminer:
+    image: adminer
+    restart: always
+  backend:
+    image: project:prod
+    container_name: project_backend
+    build: django
+    env_file:
+      - prod.env
+    depends_on:
+      - db
+      - cache
+      - mongo
+  cache:
+    container_name: memcached
+    image: memcached
+  worker:
+    image: project:prod
+    container_name: project_worker
+    command: celery -A project worker --loglevel=info
+    env_file:
+      - prod.env
+    depends_on:
+      - backend
+      - queue
+  queue:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+  mongo:
+    image: mongo:4.2.0
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: guest
+      MONGO_INITDB_ROOT_PASSWORD: guest
+      MONGO_INITDB_DATABASE: project
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: guest
+      ME_CONFIG_MONGODB_ADMINPASSWORD: guest
+  proxy:
+    container_name: project_proxy
+    build: nginx
+    depends_on:
+      - backend
+    ports:
+      - 80:80
